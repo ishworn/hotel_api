@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         try {
             $credentials = $request->validated();
-            if (!$token = auth()->attempt($credentials)) {
+            if (!$token = \Illuminate\Support\Facades\Auth::guard('api')->attempt($credentials)) {
                 return $this->unauthorizedResponse();
             }
             return new LoginResource($token);

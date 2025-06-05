@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Room;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +20,8 @@ class DatabaseSeeder extends Seeder
        
         RoomSeeder::class,
         IPListSeeder::class,
-        RoleSeeder::class,  // Add other seeder classes here
+       
+       RolesAndPermissionsSeeder::class
         // Add more as needed
     ]);
 

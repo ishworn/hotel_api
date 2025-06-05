@@ -22,4 +22,10 @@ class Customer extends Model
     'document',
 ];
 
+public function bookings()
+{
+    return $this->hasMany(Booking::class);
+}
+
+
 }
