@@ -3,42 +3,34 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Room;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class RoomSeeder extends Seeder
 {
     public function run(): void
     {
-        Room::create([
-            'room_number' => '101',
-            'type' => 'Standard',
-            'status' => 'available',
-            'floor' => 1,
-            'price' => 150,
-            'last_cleaned' => now(),
-            'images' => json_encode(['/images/room101.jpg']),
-            'features' => json_encode(['Wi-Fi', 'TV', 'Air Conditioning', 'Mini Bar']),
-            'description' => 'Comfortable standard room with all basic amenities.',
-            'capacity' => 2,
-            'area' => 28,
-            'bed_type' => 'Queen'
-        ]);
+        $rooms = [];
 
-        Room::create([
-            'room_number' => '102',
-            'type' => 'Deluxe',
-            'status' => 'occupied',
-            'floor' => 1,
-            'price' => 220,
-            'last_cleaned' => now()->subDays(1),
-            'images' => json_encode(['/images/room102.jpg']),
-            'features' => json_encode(['Wi-Fi', 'TV', 'Jacuzzi', 'Mini Bar']),
-            'description' => 'Spacious deluxe room ideal for couples.',
-            'capacity' => 3,
-            'area' => 35,
-            'bed_type' => 'King'
-        ]);
+        for ($i = 1; $i <= 10; $i++) {
+            $rooms[] = [
+                'room_number' => '10' . $i . chr(64 + $i), // 101A, 102B, etc.
+                'type' => collect(['Standard', 'Deluxe', 'Suite', 'Presidential'])->random(),
+                'status' => 'available',
+                'floor' => rand(1, 5),
+                'price' => rand(2000, 8000),
+                'last_cleaned' => Carbon::now()->subDays(rand(0, 7))->toDateString(),
+                'images' => json_encode(["room$i-1.jpg", "room$i-2.jpg"]),
+                'features' => json_encode(['WiFi', 'TV', 'AC', 'Mini Bar']),
+                'description' => "Sample description for room $i.",
+                'capacity' => rand(1, 4),
+                'area' => rand(25, 60),
+                'bed_type' => collect(['Single', 'Double', 'Queen', 'King'])->random(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
 
-        // Add more rooms as needed
+        DB::table('rooms')->insert($rooms);
     }
 }

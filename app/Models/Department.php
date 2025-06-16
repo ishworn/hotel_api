@@ -8,8 +8,11 @@ class Department extends Model
 {
     use HasFactory;
 
-    
-    protected $fillable = ['name'];
+
+    protected $table = 'departments';
+    protected $fillable = ['name',
+    'created_at', 'updated_at'];
+
 
 
 

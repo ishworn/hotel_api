@@ -20,6 +20,8 @@ class Customer extends Model
     'postal_code',
     'notes',
     'document',
+
+   
 ];
 
 public function bookings()

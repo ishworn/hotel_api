@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('floor');
             $table->decimal('price', 10, 2);
             $table->date('last_cleaned')->nullable();
-            $table->json('images')->nullable();
+            $table->string('image')->nullable();
             $table->json('features')->nullable();
             $table->text('description')->nullable();
             $table->unsignedTinyInteger('capacity');

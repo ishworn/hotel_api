@@ -6,24 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    protected $fillable = [
-        'room_number',
-        'type',
-        'status',
-        'floor',
-        'price',
-        'last_cleaned',
-        'images',
-        'features',
-        'description',
-        'capacity',
-        'area',
-        'bed_type',
-    ];
+   protected $fillable = [
+  'room_number', 'floor', 'type', 'bed_type',
+  'price', 'capacity', 'area', 'description',
+  'features', 'status', 'image'
+];
 
-    protected $casts = [
-        'images' => 'array',
-        'features' => 'array',
-        'last_cleaned' => 'date',
-    ];
+protected $casts = [
+  'features' => 'array',
+];
 }

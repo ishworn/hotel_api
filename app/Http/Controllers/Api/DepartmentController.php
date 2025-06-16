@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\Department;
@@ -14,8 +15,13 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string|unique:departments']);
-        return Department::create($request->only('name'));
+
+        try {
+            $request->validate(['name' => 'required|string|unique:departments']);
+            return Department::create($request->only('name'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to create department: ' . $e->getMessage()], 500);
+        }
     }
 
     public function show(Department $department)
