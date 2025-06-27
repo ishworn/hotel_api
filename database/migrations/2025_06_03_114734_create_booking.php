@@ -15,8 +15,7 @@ return new class extends Migration
     $table->id();
 
     $table->unsignedBigInteger('room_id'); // Foreign key to room type
-    $table->string('room_type'); // For display purposes
-    $table->string('room_number')->nullable(); // Optional room assignment
+  
 
     $table->string('booking_reference')->unique(); // Unique booking ID
 
@@ -25,8 +24,8 @@ return new class extends Migration
     $table->string('phone');
     $table->integer('guests')->default(1);
 
-    $table->date('check_in');
-    $table->date('check_out');
+    $table->timestamp('check_in');
+    $table->timestamp('check_out');
     $table->integer('nights');
 
     $table->decimal('room_rate', 8, 2);

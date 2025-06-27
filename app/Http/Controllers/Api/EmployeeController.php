@@ -26,7 +26,8 @@ class EmployeeController extends Controller
             'name'        => 'required|string|max:255',
             'email'       => 'required|email|unique:employees',
             'phone'       => 'required|string|max:20',
-            'status'      => 'required|in:active,inactive',
+            'status'      => 'nullable|in:active,inactive',
+           
             'hire_date'   => 'required|date',
             'schedule'    => 'required|string',
             'position_id' => 'required|exists:positions,id',
@@ -61,19 +62,20 @@ class EmployeeController extends Controller
     }
 
     // Update employee
-    public function update(Request $request, Employee $employee)
-    {
-        $validated = $request->validate([
-            'name'        => 'sometimes|string|max:255',
-            'email'       => ['sometimes', 'email', Rule::unique('employees')->ignore($employee->id)],
-            'phone'       => 'sometimes|string|max:20',
-            'status'      => 'sometimes|in:active,inactive',
-            'hire_date'   => 'sometimes|date',
-            'schedule'    => 'sometimes|string',
-            'position_id' => 'sometimes|exists:positions,id',
-            'role'        => 'nullable|exists:roles,name',
-        ]);
+   public function update(Request $request, Employee $employee)
+{
+    $validated = $request->validate([
+        'name'        => 'sometimes|string|max:255',
+        'email'       => ['sometimes', 'email', Rule::unique('employees')->ignore($employee->id)],
+        'phone'       => 'sometimes|string|max:20',
+        'status'      => 'sometimes|in:active,leave,suspended,inactive', // Added all possible statuses
+        'hire_date'   => 'sometimes|date',
+        'schedule'    => 'sometimes|in:morning,afternoon,evening,flexible,part-time', // Specific allowed values
+        'position_id' => 'sometimes|exists:positions,id',
+        'role'        => 'nullable|exists:roles,name',
+    ]);
 
+    try {
         $employee->update($validated);
 
         if (isset($validated['role'])) {
@@ -81,7 +83,13 @@ class EmployeeController extends Controller
         }
 
         return new EmployeeResource($employee->load(['position.department', 'roles']));
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Failed to update employee',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
 
     // Delete employee
     public function destroy(Employee $employee)

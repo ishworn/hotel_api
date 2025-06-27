@@ -11,11 +11,9 @@ class BookingResource extends JsonResource
         return [
             'booking_reference' => $this->booking_reference,
             'guests'            => $this->guests,
-            'room_number'       => $this->room_number,
-            'room_type'         => $this->room_type,
+         
             'room_rate'         => number_format($this->room_rate, 2),
-            'check_in'          => $this->check_in->format('Y-m-d'),
-            'check_out'         => $this->check_out->format('Y-m-d'),
+      
             'nights'            => $this->nights,
             'total_amount'      => number_format($this->total_amount, 2),
             'customer'          => [
@@ -25,6 +23,11 @@ class BookingResource extends JsonResource
                 'phone' => $this->customer->phone ?? null,
             ],
             'created_at' => $this->created_at->diffForHumans(),
+            'room' => [
+                'id'   => $this->room->id,
+                'name' => $this->room->name,
+                'type' => $this->room->type,
+            ],
         ];
     }
 }

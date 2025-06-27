@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
-
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\RoomController;
@@ -13,6 +12,8 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\RolePermissionController;
+use App\Http\Controllers\Api\InventoryControler;
+use App\Http\Controllers\Api\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::apiResource('bookings', BookingController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('departments', DepartmentController::class);
 Route::apiResource('positions', PositionController::class);
+Route::apiResource('inventory', CategoryController::class);
+Route::apiResource('inventory', InventoryControler::class);
 
 
 
